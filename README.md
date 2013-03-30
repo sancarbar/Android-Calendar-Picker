@@ -1,4 +1,4 @@
-![solarized vim](https://github.com/sancarbar/Android-Calendar-Picker/tree/master/assets/logo.png)
+![solarized vim](https://raw.github.com/sancarbar/Android-Calendar-Picker/master/assets/logo.png)
 
 Android Calendar Picker
 =========
