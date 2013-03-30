@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              style="@style/MontView">
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="JANUARY"
+            android:id="@+id/textViewMonthName"
+            style="@style/MontViewTitleText"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#bef3c7"
+            android:id="@+id/weekDaysLabelsLayout">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sun"
+                android:id="@+id/weekDayLabelSunday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon"
+                android:id="@+id/weekDayLabelMonday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue"
+                android:id="@+id/weekDayLabelTuesday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed"
+                android:id="@+id/weekDayLabelWednesday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu"
+                android:id="@+id/weekDayLabelThursday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fri"
+                android:id="@+id/weekDayLabelFriday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat"
+                android:id="@+id/weekDayLabelSaturday"
+                android:layout_gravity="center"
+                style="@style/DayTitleText"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center_vertical|center_horizontal"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="match_parent"
+                  android:layout_width="match_parent"
+                  android:id="@+id/monthDayButtonsContainer"
+                  android:orientation="vertical"
+                  android:columnCount="7"
+                  android:rowCount="6">
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
