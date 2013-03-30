@@ -18,9 +18,10 @@
  */
 
 
-package com.sancarbar.androidcalendar;
+package com.sancarbar.androidcalendar.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,9 +31,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.sancarbar.androidcalendar.R;
 import com.sancarbar.androidcalendar.ui.CalendarButton;
 import com.sancarbar.androidcalendar.util.CalendarUtil;
-
+import com.sancarbar.androidcalendar.util.Constants;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,10 +48,10 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
 
     private Date startDate;
     private Date endDate;
-    private final String START_DATE_KEY = "start_date_key";
-    private final String END_DATE_KEY = "end_date_key";
     private ScrollView scrollViewCalendar;
-    LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
+    private boolean isStartDate = false;
+
 
 
     /**
@@ -59,21 +61,24 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_view);
-        if(null != savedInstanceState){
-            startDate = (Date) savedInstanceState.get(START_DATE_KEY);
-            endDate = (Date) savedInstanceState.get(END_DATE_KEY);
+        Intent intent = getIntent();
+        if(null != intent){
+            startDate = (Date) intent.getSerializableExtra(Constants.START_DATE_KEY);
+            endDate = (Date) intent.getSerializableExtra(Constants.END_DATE_KEY);
+            isStartDate =  intent.getBooleanExtra(Constants.IS_FROM_DATE_KEY, false);
         }
         scrollViewCalendar = (ScrollView) findViewById(R.id.scrollViewCalendar);
         layoutInflater = getLayoutInflater();
         fillCalendarView();
-
-
+        findViewById(R.id.buttonToday).setOnClickListener(this);
+        findViewById(R.id.buttonTomorrow).setOnClickListener(this);
     }
 
 
     private void fillCalendarView(){
         Calendar calendar = Calendar.getInstance();
         Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTime(calendar.getTime());
         calendarEnd.add(Calendar.YEAR, 1);
         LinearLayout calendarMonthsLayout = new LinearLayout(this);
         calendarMonthsLayout.setOrientation(LinearLayout.VERTICAL);
@@ -94,7 +99,8 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, 1);
         Calendar calendarEnd = Calendar.getInstance();
-        calendarEnd.set(year, month, 1);
+        calendarEnd.setTime(calendar.getTime());
+        Log.d("Developer","Calendar before: "+calendar.getTime().before(calendarEnd.getTime()));
         calendarEnd.add(Calendar.MONTH, 1);
         textViewMonthName.setText(CalendarUtil.getMonthNameFromLocale(month)+ " "+year);
         setWeekDaysLabels(weekDaysLabelsLayout);
@@ -103,10 +109,36 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
             weekLayout.addView(getEmptyButton());
         }
         while (calendar.getTime().before(calendarEnd.getTime())) {
-            CalendarButton calendarButton = new CalendarButton(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            CalendarButton calendarButton = new CalendarButton(this, calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            Log.d("Developer","Adding date: "+calendar.getTime());
+            if(CalendarUtil.isTodayInCalendar(calendar)){
+                if(null != startDate && CalendarUtil.isSameDateInCalendar(calendar, startDate))
+                    calendarButton.setBackgroundResource(R.drawable.calendar_button_pressed_selected_date);
+                else if(null != endDate && CalendarUtil.isSameDateInCalendar(calendar, endDate))
+                    calendarButton.setBackgroundResource(R.color.green);
+                else
+                    calendarButton.setBackgroundResource(R.drawable.calendar_button_pressed_selector);
+            } else if (CalendarUtil.isWeekendDayInCalendar(calendar)) {
+                if(null != startDate && CalendarUtil.isSameDateInCalendar(calendar, startDate))
+                    calendarButton.setBackgroundResource(R.drawable.calendar_button_weekend_selected_date);
+                else if(null != endDate && CalendarUtil.isSameDateInCalendar(calendar, endDate))
+                    calendarButton.setBackgroundResource(R.color.green);
+                else
+                    calendarButton.setBackgroundResource(R.drawable.calendar_button_weekend_selector);
+
+            } else{
+                if(null != startDate && CalendarUtil.isSameDateInCalendar(calendar, startDate))
+                    calendarButton.setBackgroundResource(R.drawable.calendar_button_normal_selected_date);
+                else if(null != endDate && CalendarUtil.isSameDateInCalendar(calendar, endDate))
+                    calendarButton.setBackgroundResource(R.color.green);
+                else
+                    calendarButton.setBackgroundResource(R.drawable.calendar_button_normal_selector);
+            }
             calendarButton.setOnClickListener(this);
-            if(calendar.getTime().before(Calendar.getInstance().getTime()))
+            if(CalendarUtil.isDateBeforeToday(calendar))
                 calendarButton.setEnabled(false);
+
             weekLayout.addView(calendarButton);
             if(calendar.get(Calendar.DAY_OF_WEEK) == 7){
                 monthDayButtonsContainer.addView(weekLayout);
@@ -141,7 +173,6 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
         friday.setText(CalendarUtil.getShortWeekdayName(6));
         saturday = (TextView) weekDaysLabelsLayout.findViewById(R.id.weekDayLabelSaturday);
         saturday.setText(CalendarUtil.getShortWeekdayName(7));
-
     }
 
     private LinearLayout getWeekLinearLayout(){
@@ -156,7 +187,29 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Log.d("Developer", "Button text: "+((Button) view).getText());
+        Calendar calendar = Calendar.getInstance();
+        if(view.getId() == R.id.buttonTomorrow || view.getId() == R.id.buttonToday){
+            if(view.getId() == R.id.buttonTomorrow )
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }else{
+            CalendarButton calendarButton = ((CalendarButton) view);
+            calendar.set(calendarButton.getYear(), calendarButton.getMonth(), calendarButton.getDay());
+        }
+        Intent resultIntent = new Intent();
+        if(isStartDate)
+            startDate = calendar.getTime();
+        else
+            endDate = calendar.getTime();
+        if(null != startDate && null != endDate ){
+            if(startDate.after(endDate) && isStartDate)
+                endDate = startDate;
+            else if(endDate.before(startDate))
+                startDate = endDate;
+        }
+        resultIntent.putExtra(Constants.START_DATE_KEY, startDate);
+        resultIntent.putExtra(Constants.END_DATE_KEY, endDate);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 
 
@@ -165,6 +218,9 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
         button.setLayoutParams(param);
         button.setEnabled(false);
+        button.setBackgroundResource(R.drawable.calendar_button_normal_selector);
         return button;
     }
+
+
 }

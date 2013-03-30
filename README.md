@@ -3,4 +3,4 @@
 Android Calendar Picker
 =========
 
-Calendar Picker compatible with Android versions starting from API level 8.
+Calendar Picker compatible with most commonly used Android versions starting from API level 7.

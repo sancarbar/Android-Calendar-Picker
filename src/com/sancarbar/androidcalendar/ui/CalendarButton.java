@@ -21,9 +21,10 @@
 package com.sancarbar.androidcalendar.ui;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import com.sancarbar.androidcalendar.R;
 
 /**
  * Calendar Button to holds the dates related data
@@ -35,6 +36,8 @@ public class CalendarButton extends Button{
     private int year;
     private int month;
     private  int day;
+    private final int blackColor = Color.parseColor("#3C3C3C");
+    private final int lightGrayColor = Color.parseColor("#d0d0d0");
 
 
     public CalendarButton(Context context, int year, int month, int day) {
@@ -45,8 +48,8 @@ public class CalendarButton extends Button{
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
         setLayoutParams(param);
         setText("" + day);
-        setTextSize(18);
-        setTextColor(R.color.gray);
+        setTypeface(null, Typeface.BOLD);
+        setTextColor(blackColor);
     }
 
     public int getDay() {
@@ -61,4 +64,15 @@ public class CalendarButton extends Button{
         return year;
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if(enabled){
+            setTypeface(null, Typeface.BOLD);
+            setTextColor(blackColor);
+        } else{
+            setTypeface(null, Typeface.NORMAL);
+            setTextColor(lightGrayColor);
+        }
+    }
 }
