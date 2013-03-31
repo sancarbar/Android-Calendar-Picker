@@ -46,11 +46,11 @@ import java.util.Date;
  */
 public class CalendarActivity extends Activity implements View.OnClickListener {
 
-    private Date startDate;
-    private Date endDate;
+    private Date departureDate;
+    private Date returnDate;
     private ScrollView scrollViewCalendar;
     private LayoutInflater layoutInflater;
-    private boolean isStartDate = false;
+    private boolean isDepartureDate = false;
 
 
 
@@ -63,15 +63,21 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.calendar_view);
         Intent intent = getIntent();
         if(null != intent){
-            startDate = (Date) intent.getSerializableExtra(Constants.START_DATE_KEY);
-            endDate = (Date) intent.getSerializableExtra(Constants.END_DATE_KEY);
-            isStartDate =  intent.getBooleanExtra(Constants.IS_FROM_DATE_KEY, false);
+            departureDate = (Date) intent.getSerializableExtra(Constants.DEPARTURE_DATE_KEY);
+            returnDate = (Date) intent.getSerializableExtra(Constants.RETURN_DATE_KEY);
+            isDepartureDate =  intent.getBooleanExtra(Constants.IS_FROM_DATE_KEY, false);
         }
         scrollViewCalendar = (ScrollView) findViewById(R.id.scrollViewCalendar);
         layoutInflater = getLayoutInflater();
         fillCalendarView();
         findViewById(R.id.buttonToday).setOnClickListener(this);
         findViewById(R.id.buttonTomorrow).setOnClickListener(this);
+        TextView titleBarText = ((TextView) findViewById(R.id.titleBarText));
+        if(isDepartureDate)
+            titleBarText.setText(getResources().getText(R.string.departure_date));
+        else
+            titleBarText.setText(getResources().getText(R.string.return_date));
+
     }
 
 
@@ -113,24 +119,24 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             Log.d("Developer","Adding date: "+calendar.getTime());
             if(CalendarUtil.isTodayInCalendar(calendar)){
-                if(null != startDate && CalendarUtil.isSameDateInCalendar(calendar, startDate))
+                if(null != departureDate && CalendarUtil.isSameDateInCalendar(calendar, departureDate))
                     calendarButton.setBackgroundResource(R.drawable.calendar_button_pressed_selected_date);
-                else if(null != endDate && CalendarUtil.isSameDateInCalendar(calendar, endDate))
+                else if(null != returnDate && CalendarUtil.isSameDateInCalendar(calendar, returnDate))
                     calendarButton.setBackgroundResource(R.color.green);
                 else
                     calendarButton.setBackgroundResource(R.drawable.calendar_button_pressed_selector);
             } else if (CalendarUtil.isWeekendDayInCalendar(calendar)) {
-                if(null != startDate && CalendarUtil.isSameDateInCalendar(calendar, startDate))
+                if(null != departureDate && CalendarUtil.isSameDateInCalendar(calendar, departureDate))
                     calendarButton.setBackgroundResource(R.drawable.calendar_button_weekend_selected_date);
-                else if(null != endDate && CalendarUtil.isSameDateInCalendar(calendar, endDate))
+                else if(null != returnDate && CalendarUtil.isSameDateInCalendar(calendar, returnDate))
                     calendarButton.setBackgroundResource(R.color.green);
                 else
                     calendarButton.setBackgroundResource(R.drawable.calendar_button_weekend_selector);
 
             } else{
-                if(null != startDate && CalendarUtil.isSameDateInCalendar(calendar, startDate))
+                if(null != departureDate && CalendarUtil.isSameDateInCalendar(calendar, departureDate))
                     calendarButton.setBackgroundResource(R.drawable.calendar_button_normal_selected_date);
-                else if(null != endDate && CalendarUtil.isSameDateInCalendar(calendar, endDate))
+                else if(null != returnDate && CalendarUtil.isSameDateInCalendar(calendar, returnDate))
                     calendarButton.setBackgroundResource(R.color.green);
                 else
                     calendarButton.setBackgroundResource(R.drawable.calendar_button_normal_selector);
@@ -196,18 +202,18 @@ public class CalendarActivity extends Activity implements View.OnClickListener {
             calendar.set(calendarButton.getYear(), calendarButton.getMonth(), calendarButton.getDay());
         }
         Intent resultIntent = new Intent();
-        if(isStartDate)
-            startDate = calendar.getTime();
+        if(isDepartureDate)
+            departureDate = calendar.getTime();
         else
-            endDate = calendar.getTime();
-        if(null != startDate && null != endDate ){
-            if(startDate.after(endDate) && isStartDate)
-                endDate = startDate;
-            else if(endDate.before(startDate))
-                startDate = endDate;
+            returnDate = calendar.getTime();
+        if(null != departureDate && null != returnDate){
+            if(departureDate.after(returnDate) && isDepartureDate)
+                returnDate = departureDate;
+            else if(returnDate.before(departureDate))
+                departureDate = returnDate;
         }
-        resultIntent.putExtra(Constants.START_DATE_KEY, startDate);
-        resultIntent.putExtra(Constants.END_DATE_KEY, endDate);
+        resultIntent.putExtra(Constants.DEPARTURE_DATE_KEY, departureDate);
+        resultIntent.putExtra(Constants.RETURN_DATE_KEY, returnDate);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }

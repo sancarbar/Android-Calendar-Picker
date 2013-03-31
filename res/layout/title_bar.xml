@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:background="@color/black"
+              android:padding="5dp">
+
+    <ImageView android:id="@+id/titleBarImage"
+               android:layout_width="25dp"
+               android:layout_height="25dp"
+               android:background="@drawable/ic_launcher"
+               android:layout_marginLeft="5dp">
+
+    </ImageView>
+
+    <TextView
+            android:id="@+id/titleBarText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            style="@style/TopBarTitle"/>
+</LinearLayout>

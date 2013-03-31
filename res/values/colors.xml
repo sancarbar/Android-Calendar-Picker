@@ -11,5 +11,7 @@
     <color name="transparent">#80000000</color>
     <color name="transparent_white">#80FFFFFF</color>
     <color name="green">#B0C527</color>
+    <color name="title_background">#3C3C3C</color>
+    <color name="top_bar_title_text">#ffffff</color>
 
 </resources>

@@ -5,21 +5,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <include
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/title_bar"
+            android:id="@+id/include"/>
+
     <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/scrollViewCalendar"
-            android:layout_weight="0.1"
-            android:layout_alignParentTop="true"
-            android:layout_alignTop="@+id/calendarScrollableView"
-            android:layout_above="@+id/calendarScrollableView"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:layout_below="@+id/include"
+            android:layout_above="@+id/calendarScrollableView"/>
 
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
             android:padding="5dp"
             android:background="@color/black"
             android:layout_alignParentBottom="true"
@@ -43,4 +46,5 @@
                 android:layout_gravity="center_vertical"
                 />
     </LinearLayout>
+
 </RelativeLayout>

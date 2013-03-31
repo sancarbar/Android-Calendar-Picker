@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-    <ScrollView
+
+    <include
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/scrollViewCalendar"
-            android:layout_weight="0.1"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/linearLayout"
-            android:paddingBottom="5dp"/>
+            android:layout_height="wrap_content"
+            layout="@layout/title_bar"
+            android:id="@+id/include"/>
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.9"
-            android:padding="5dp"
-            android:background="@color/black"
-            android:layout_alignParentRight="true"
-            android:id="@+id/linearLayout">
+    <RelativeLayout android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        <Button
+        <ScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="@string/today"
-                android:id="@+id/buttonToday"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"/>
+                android:id="@+id/scrollViewCalendar"
+                android:layout_weight="0.1"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/linearLayout"
+                android:paddingBottom="5dp"/>
 
-        <Button
-                android:layout_width="fill_parent"
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/tomorrow"
-                android:id="@+id/buttonTomorrow"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                />
-    </LinearLayout>
-</RelativeLayout>
+                android:layout_weight="0.9"
+                android:padding="5dp"
+                android:background="@color/black"
+                android:layout_alignParentRight="true"
+                android:id="@+id/linearLayout">
+
+            <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="@string/today"
+                    android:id="@+id/buttonToday"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"/>
+
+            <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="@string/tomorrow"
+                    android:id="@+id/buttonTomorrow"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

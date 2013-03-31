@@ -30,9 +30,9 @@ public class Constants {
 
     public static final int CALENDAR_PICKER_ACTIVITY_RESULT = 1;
 
-    public static final String START_DATE_KEY = "start_date_key";
+    public static final String DEPARTURE_DATE_KEY = "departure_date_key";
 
-    public static final String END_DATE_KEY = "end_date_key";
+    public static final String RETURN_DATE_KEY = "return_date_key";
 
 
 }

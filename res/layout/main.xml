@@ -20,7 +20,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_date"
+            android:text="@string/departure_date"
             android:id="@+id/textView2"
             android:layout_marginLeft="10dp"
             android:textSize="18dp"
@@ -39,7 +39,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/end_date"
+            android:text="@string/return_date"
             android:id="@+id/textView1"
             android:layout_marginLeft="10dp"
             android:textSize="18dp"

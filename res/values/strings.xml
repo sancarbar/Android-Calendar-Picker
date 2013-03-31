@@ -3,7 +3,7 @@
     <string name="app_name">Android Calendar Picker</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-    <string name="start_date">Start Date</string>
-    <string name="end_date">End Date</string>
+    <string name="departure_date">Departure Date</string>
+    <string name="return_date">Return Date</string>
     <string name="click_to_choose_date">Click to choose your date</string>
 </resources>

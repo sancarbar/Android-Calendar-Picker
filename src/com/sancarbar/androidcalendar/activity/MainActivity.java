@@ -37,8 +37,8 @@ import java.util.Date;
  */
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    private Date startDate;
-    private Date endDate;
+    private Date departureDate;
+    private Date returnDate;
     private Button fromDateEditText;
     private Button toDateEditText;
 
@@ -55,8 +55,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, CalendarActivity.class);
-        intent.putExtra(Constants.START_DATE_KEY, startDate);
-        intent.putExtra(Constants.END_DATE_KEY, endDate);
+        intent.putExtra(Constants.DEPARTURE_DATE_KEY, departureDate);
+        intent.putExtra(Constants.RETURN_DATE_KEY, returnDate);
         switch (view.getId()){
             case R.id.fromDateEditText:
                 intent.putExtra(Constants.IS_FROM_DATE_KEY, true);
@@ -73,8 +73,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(resultCode == Activity.RESULT_OK && requestCode == Constants.CALENDAR_PICKER_ACTIVITY_RESULT){
-            startDate = (Date) data.getSerializableExtra(Constants.START_DATE_KEY);
-            endDate = (Date) data.getSerializableExtra(Constants.END_DATE_KEY);
+            departureDate = (Date) data.getSerializableExtra(Constants.DEPARTURE_DATE_KEY);
+            returnDate = (Date) data.getSerializableExtra(Constants.RETURN_DATE_KEY);
             updateDatesView();
         }else
             super.onActivityResult(requestCode, resultCode, data);
@@ -82,9 +82,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void updateDatesView(){
-        if(null != startDate)
-            fromDateEditText.setText(CalendarUtil.getLocaleFormatDate(startDate, this));
-        if(null != endDate)
-            toDateEditText.setText(CalendarUtil.getLocaleFormatDate(endDate, this));
+        if(null != departureDate)
+            fromDateEditText.setText(CalendarUtil.getLocaleFormatDate(departureDate, this));
+        if(null != returnDate)
+            toDateEditText.setText(CalendarUtil.getLocaleFormatDate(returnDate, this));
     }
 }
